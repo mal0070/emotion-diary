@@ -3,7 +3,8 @@ import { Home, Diary, New, NotFound, Edit } from './pages';
 import './App.css';
 import Button from './components/Button';
 import Header from './components/Header';
-import { useReducer, useRef } from 'react';
+import { useReducer, useRef, useContext } from 'react';
+import { createContext } from 'react';
 
 const mockData = [
   {
@@ -22,16 +23,21 @@ const mockData = [
 
 function reducer(state, action) {
   switch (action.type) {
-    case "CREATE":
+    case 'CREATE':
       return [action.data, ...state];
-    case "UPDATE":
-      return state.map((item)=> String(item.id) === String(action.data.id) ? action.data : item);
-    case "DELETE":
-      return state.filter((item)=> String(item.id) !== String(action.id));
+    case 'UPDATE':
+      return state.map((item) =>
+        String(item.id) === String(action.data.id) ? action.data : item
+      );
+    case 'DELETE':
+      return state.filter((item) => String(item.id) !== String(action.id));
     default:
       return state;
   }
 }
+
+const DiaryStateContext = createContext();
+const DiaryDispatchContext = createContext();
 
 function App() {
   const [data, dispatch] = useReducer(reducer, mockData);
@@ -51,21 +57,21 @@ function App() {
 
   const onUpdate = (id, createdDate, emotionId, content) => {
     dispatch({
-      type: "UPDATE",
+      type: 'UPDATE',
       data: {
         id,
         createdDate,
         emotionId,
-        content
-      }
-    })
+        content,
+      },
+    });
   };
 
   const onDelete = (id) => {
     dispatch({
-      type: "DELETE",
-      id
-    })
+      type: 'DELETE',
+      id,
+    });
   };
 
   return (
@@ -75,13 +81,17 @@ function App() {
         leftChild={<Button text={'Left'} />}
         rightChild={<Button text={'Right'} />}
       />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/new" element={<New />} />
-        <Route path="/diary/:id" element={<Diary />} />
-        <Route path="/edit/:id" element={<Edit />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/new" element={<New />} />
+            <Route path="/diary/:id" element={<Diary />} />
+            <Route path="/edit/:id" element={<Edit />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
     </>
   );
 }
