@@ -1,20 +1,30 @@
-import {getEmotionImage} from '../utils/get-emotion-image';
+import { getEmotionImage } from '../utils/get-emotion-image';
 import Button from './Button';
 import './DiaryItem.css';
+import { useNavigate } from 'react-router-dom';
 
-function DiaryItem() {
+function DiaryItem({ id, emotionId, createdDate, content }) {
+  const nav = useNavigate();
 
-    const emotionId = 4;
   return (
     <div className="DiaryItem">
-      <div className={`img_section img_section_${emotionId}`}>
-        <img src={getEmotionImage(emotionId)} alt='img'/>
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+      <div
+        onClick={() => nav(`/diary/${id}`)}
+        className={`img_section img_section_${emotionId}`}
+      >
+        <img src={getEmotionImage(emotionId)} alt="img" />
       </div>
-      <div className="info_section">
-        <div className='created_date'>{new Date().toLocaleDateString()}</div>
-        <div className='content'>content</div>
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+      <div onClick={() => nav(`/diary/${id}`)} className="info_section">
+        <div className="created_date">
+          {new Date(createdDate).toLocaleDateString()}
+        </div>
+        <div className="content">{content}</div>
       </div>
-      <div className="button_section"><Button text={'수정하기'}/></div>
+      <div className="button_section">
+        <Button onClick={()=>nav(`/edit/${id}`)} text={'수정하기'} />
+      </div>
     </div>
   );
 }
