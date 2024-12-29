@@ -3,8 +3,7 @@ import { Home, Diary, New, NotFound, Edit } from './pages';
 import './App.css';
 import Button from './components/Button';
 import Header from './components/Header';
-import { useReducer, useRef, useContext } from 'react';
-import { createContext } from 'react';
+import { useReducer, useRef, createContext } from 'react';
 
 const mockData = [
   {
@@ -76,11 +75,6 @@ function App() {
 
   return (
     <>
-      <Header
-        title={'Header'}
-        leftChild={<Button text={'Left'} />}
-        rightChild={<Button text={'Right'} />}
-      />
       <DiaryStateContext.Provider value={data}>
         <DiaryDispatchContext.Provider value={{ onCreate, onUpdate, onDelete }}>
           <Routes>
