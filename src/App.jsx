@@ -1,8 +1,7 @@
-import { Routes, Route, useActionData } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Home, Diary, New, NotFound, Edit } from './pages';
 import './App.css';
-import Button from './components/Button';
-import Header from './components/Header';
+
 import { useReducer, useRef, createContext } from 'react';
 
 const mockData = [
