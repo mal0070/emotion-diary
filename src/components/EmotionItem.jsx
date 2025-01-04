@@ -1,9 +1,11 @@
 import './EmotionItem.css';
 import { getEmotionImage } from '../utils/get-emotion-image';
 
-function EmotionItem({ emotionId, emotionName, isSelected }) {
+function EmotionItem({ emotionId, emotionName, isSelected, onClick }) {
   return (
+    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
     <div
+      onClick={onClick}
       className={`EmotionItem ${
         isSelected ? `EmotionItem_on_${emotionId}` : ''
       }`}
