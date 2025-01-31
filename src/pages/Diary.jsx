@@ -4,10 +4,12 @@ import Button from '../components/Button';
 import Viewer from '../components/Viewer';
 import useDiary from '../hooks/useDiary';
 import { getStringedDate } from '../utils/get-stringed-date';
+import usePageTitle from '../hooks/usePageTitle';
 
 function Diary() {
   const params = useParams();
   const nav = useNavigate();
+  usePageTitle(`${params.id}번 일기`);
 
   const curDiaryItem = useDiary(params.id);
   //useEffect는 컴포넌트가 렌더링된 이후에 실행되는데, 초깃값이 지금 undefined
