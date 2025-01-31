@@ -2,7 +2,7 @@
 ## 소개
 - 일기를 작성하는 서비스
 - 감정까지 함께 기록할 수 있음
-- 배포 주소 : `https://emotion-diary-idlal9yu8-minas-projects-1f523a49.vercel.app/`
+- 배포 주소 : https://emotion-diary-idlal9yu8-minas-projects-1f523a49.vercel.app/
 <br />
 
 ## 페이지 라우팅
